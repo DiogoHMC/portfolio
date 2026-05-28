@@ -1,0 +1,8 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#031926"/>
+  <rect x="80" y="80" width="1040" height="640" rx="48" fill="#0f172a"/>
+  <rect x="120" y="120" width="960" height="520" rx="32" fill="#144e72"/>
+  <rect x="120" y="680" width="720" height="80" rx="20" fill="#164e63"/>
+  <text x="600" y="410" text-anchor="middle" fill="#e2e8f0" font-family="Verdana" font-size="64">Project 2</text>
+  <text x="600" y="740" text-anchor="middle" fill="#94a3b8" font-family="Verdana" font-size="40">NestJS · TypeScript · Prisma</text>
+</svg>
