@@ -1,7 +1,13 @@
 "use client";
 
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
+import { projects } from './data/projects';
+import ThemeToggle from "../components/ThemeToggle";
+
+// @todo trocar a foto de IA para colocar o mascote do golang, adicionar mais detalhes dos projetos
+// @todo mexer um pouco nas hards skills colocar ele maior, colocar o nome da primeira pagina maior
 
 // Tipos
 interface Project {
@@ -29,62 +35,7 @@ const Portfolio: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Dados do portfólio
-  const projects: Project[] = [
-    {
-      id: '1',
-      title: 'Cattuccino',
-      description: 'Brief description of the project and its main features',
-      technologies: ['Python', 'mySQL', 'Docker', 'React'],
-      imageUrl: '/images/cattuccino.jpeg',
-      githubUrl: 'https://github.com/DiogoHMC/Cattuccino_P5',
-      featured: true
-    },
-    {
-      id: '2',
-      title: 'Performance Evaluation System',
-      description: 'Brief description of the project and its main features',
-      technologies: ['NestJS', 'Prisma', 'Tailwind' ,'React'],
-      imageUrl: '/images/project-2.svg',
-      githubUrl: 'https://github.com/DiogoHMC/Sistema-de-Avaliacao-de-Performance',
-      featured: true
-    },
-    {
-      id: '3',
-      title: 'Project Title 3',
-      description: 'Brief description of the project and its main features',
-      technologies: ['React', 'Node.js', 'MongoDB'],
-      imageUrl: '/images/project-3.svg',
-      githubUrl: 'https://github.com'
-    },
-    {
-      id: '4',
-      title: 'Project Title 4',
-      description: 'Brief description of the project and its main features',
-      technologies: ['NestJS', 'TypeScript', 'Prisma'],
-      imageUrl: '/images/project-4.svg',
-      githubUrl: 'https://github.com',
-      featured: true
-    },
-    {
-      id: '5',
-      title: 'Project Title 5',
-      description: 'Brief description of the project and its main features',
-      technologies: ['NestJS', 'TypeScript', 'Prisma'],
-      imageUrl: '/images/project-4.svg',
-      githubUrl: 'https://github.com',
-      featured: true
-    },
-    {
-      id: '6',
-      title: 'Project Title 6',
-      description: 'Brief description of the project and its main features',
-      technologies: ['NestJS', 'TypeScript', 'Prisma'],
-      imageUrl: '/images/project-4.svg',
-      githubUrl: 'https://github.com',
-      featured: true
-    }
-  ];
+  // Dados do portfólio importados de ./data/projects
 
   const experiences: Experience[] = [
     {
@@ -112,10 +63,12 @@ const Portfolio: React.FC = () => {
     setMobileMenuOpen(false);
     
     const element = document.getElementById(sectionId);
+    const header = document.querySelector('.header');
+    const headerHeight = header ? header.clientHeight : 80;
+
     if (element) {
-      const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 12;
 
       window.scrollTo({
         top: offsetPosition,
@@ -128,7 +81,9 @@ const Portfolio: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'projects', 'experience', 'about', 'contact'];
-      const scrollPosition = window.scrollY + 100;
+      const header = document.querySelector('.header');
+      const headerHeight = header ? header.clientHeight : 80;
+      const scrollPosition = window.scrollY + headerHeight + 20;
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -139,6 +94,11 @@ const Portfolio: React.FC = () => {
             break;
           }
         }
+      }
+
+      const atPageBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10;
+      if (atPageBottom) {
+        setActiveSection('contact');
       }
     };
 
@@ -155,8 +115,13 @@ const Portfolio: React.FC = () => {
               <div className="logo">
                 <img
                   src="/images/logodhmc.svg"
-                  alt="Diogo Correia Logo"
-                  className="logo-image"
+                  alt="Diogo Correia Logo dark"
+                  className="logo-image logo-theme-dark"
+                />
+                <img
+                  src="/images/LogoD.svg"
+                  alt="Diogo Correia Logo light"
+                  className="logo-image logo-theme-light"
                 />
               </div>
             {/* Mobile Menu Toggle */}
@@ -208,6 +173,9 @@ const Portfolio: React.FC = () => {
                 Contact
               </a>
             </nav>
+            <div className="header-right">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </header>
@@ -257,38 +225,40 @@ const Portfolio: React.FC = () => {
           <h2 className="section-title">Spotlight projects</h2>
           <div className="projects-grid">
             {projects.map((project) => (
-              <div key={project.id} className="project-card">
-                <div className="project-image">
-                <Image
-                  src={project.imageUrl}
-                  alt={`Imagem do projeto ${project.title}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="project-image-img"
-                />
-              </div>
-                <div className="project-content">
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <div className="project-tech">
-                    {project.technologies.map((tech, index) => (
-                      <span key={index} className="tech-tag">{tech}</span>
-                    ))}
+              <Link key={project.id} href={`/projects/${project.id}`} className="project-card-link">
+                <div className="project-card">
+                  <div className="project-image">
+                    <Image
+                      src={project.imageUrl}
+                      alt={`Imagem do projeto ${project.title}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="project-image-img"
+                    />
                   </div>
-                  <div className="project-links">
-                    {project.githubUrl && (
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        Github
-                      </a>
-                    )}
-                    {project.liveUrl && (
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        Live demo
-                      </a>
-                    )}
+                  <div className="project-content">
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                    <div className="project-tech">
+                      {project.technologies.map((tech, index) => (
+                        <span key={index} className="tech-tag">{tech}</span>
+                      ))}
+                    </div>
+                    <div className="project-links">
+                      {project.githubUrl && (
+                        <a onClick={(e)=>e.stopPropagation()} href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                          Github
+                        </a>
+                      )}
+                      {project.liveUrl && (
+                        <a onClick={(e)=>e.stopPropagation()} href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                          Live demo
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -24,7 +24,26 @@ export default function RootLayout({
       lang="en"
       className={`${zain.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function(){
+              try{
+                var t = localStorage.getItem('site-theme');
+                if(t==='light' || t==='dark'){
+                  document.documentElement.setAttribute('data-theme', t);
+                } else {
+                  // default to dark when no preference
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                }
+              }catch(e){}
+            })();
+          `,
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

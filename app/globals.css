@@ -1,12 +1,29 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Default to dark theme (user requested default dark). Colors are not pure #000000 or #ffffff. */
+  --background: #0b0c10; /* near-black */
+  --foreground: #e7eef7; /* off-white */
+  --header-bg: rgba(10, 11, 15, 0.7);
+  --border: rgba(255,255,255,0.06);
+  --muted: #9aa6b2;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Light theme when [data-theme="light"] is set on <html> */
+html[data-theme="light"] {
+  --background: #f7f8fb; /* off-white */
+  --foreground: #0f1724; /* near-black for text */
+  --header-bg: rgba(255,255,255,0.8);
+  --border: rgba(15,23,36,0.06);
+  --muted: #55646f;
+}
+
+/* Provide a fallback for users with prefers-color-scheme if they don't have a stored preference */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --background: #f7f8fb;
+    --foreground: #0f1724;
+    --header-bg: rgba(255,255,255,0.8);
+    --border: rgba(15,23,36,0.06);
+    --muted: #55646f;
   }
 }
 
@@ -14,4 +31,15 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-zain), Arial, Helvetica, sans-serif;
+}
+
+/* Header / navbar styling to override Tailwind neutral utilities when needed */
+.site-header {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(6px);
+}
+
+.muted {
+  color: var(--muted);
 }

@@ -14,7 +14,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-neutral-900/80 backdrop-blur-sm border-b border-neutral-800">
+    <header className="site-header fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-6 py-4">
         <nav className="flex items-center justify-between">
           {/* Logo */}
@@ -27,7 +27,7 @@ export default function Navbar() {
           </Link>
 
           {/* Navigation */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             {navItems.map((item) => (
               <Link
                 key={item.name}

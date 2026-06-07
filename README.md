@@ -204,9 +204,6 @@ O portfólio é 100% responsivo e adapta-se automaticamente a:
 - Responsive Design
 - Semantic HTML
 
-## 📄 Licença
-
-MIT License - sinta-se livre para usar e modificar.
 
 ---
 
