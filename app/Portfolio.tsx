@@ -36,6 +36,7 @@ const Portfolio: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState('');
+  const [isAvatarAlt, setIsAvatarAlt] = useState(false);
 
   const categories = [
     {
@@ -390,7 +391,14 @@ const Portfolio: React.FC = () => {
               
               <div className="skills-section">
                 <h3>Core technologies</h3>
-                <div className="skills-grid">
+                <div
+                  className="skills-grid"
+                  onMouseEnter={() => setIsAvatarAlt(true)}
+                  onMouseLeave={() => {
+                    setActiveCategory('');
+                    setIsAvatarAlt(false);
+                  }}
+                >
                   {categories.map((category) => {
                     const Icon = category.icon;
                     const isActive = activeCategory === category.id;
@@ -398,7 +406,7 @@ const Portfolio: React.FC = () => {
                       <button
                         key={category.id}
                         type="button"
-                        className={`skill-category ${isActive ? 'active' : ''}`}
+                        className={`skill-category ${category.id} ${isActive ? 'active' : ''}`}
                         style={{ '--accent': category.accent } as React.CSSProperties}
                         onMouseEnter={() => setActiveCategory(category.id)}
                         onClick={() => setActiveCategory(category.id)}
@@ -411,7 +419,6 @@ const Portfolio: React.FC = () => {
                             </span>
                             <div>
                               <h4>{category.title}</h4>
-                              <p className="category-count">{category.count} Technologies</p>
                             </div>
                           </div>
                         </div>
@@ -435,13 +442,20 @@ const Portfolio: React.FC = () => {
               </div>
             </div>
             <div className="about-avatar">
-                <Image
-                  src="/images/myPhoto2.png"
-                  alt="Foto de Diogo Correia"
-                  fill
-                  priority
-                  className="avatar-image rect-avatar"
-                />
+              <Image
+                src="/images/myPhoto2.png"
+                alt="Foto de Diogo Correia"
+                fill
+                priority
+                className={`avatar-image rect-avatar ${isAvatarAlt ? 'hidden' : 'visible'}`}
+              />
+              <Image
+                src="/images/myPhoto2OtherPose.png"
+                alt="Foto de Diogo Correia alternativa"
+                fill
+                priority
+                className={`avatar-image rect-avatar ${isAvatarAlt ? 'visible' : 'hidden'}`}
+              />
             </div>
           </div>
         </div>
