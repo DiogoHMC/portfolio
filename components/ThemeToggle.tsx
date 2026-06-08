@@ -2,29 +2,27 @@
 
 import { useEffect, useState } from "react";
 
+function getInitialTheme(): "dark" | "light" {
+  if (typeof window === "undefined") {
+    return "dark";
+  }
+
+  const stored = localStorage.getItem("site-theme");
+  return stored === "light" || stored === "dark" ? stored : "dark";
+}
+
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">(getInitialTheme);
 
   useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
     try {
-      const stored = localStorage.getItem("site-theme");
-      if (stored === "light" || stored === "dark") {
-        setTheme(stored);
-        document.documentElement.setAttribute("data-theme", stored);
-      } else {
-        document.documentElement.setAttribute("data-theme", "dark");
-        setTheme("dark");
-      }
+      localStorage.setItem("site-theme", theme);
     } catch (e) {}
-  }, []);
+  }, [theme]);
 
   function toggle() {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    try {
-      localStorage.setItem("site-theme", next);
-    } catch (e) {}
-    document.documentElement.setAttribute("data-theme", next);
+    setTheme((current) => (current === "dark" ? "light" : "dark"));
   }
 
   return (

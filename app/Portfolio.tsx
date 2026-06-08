@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
+import { SiGo, SiNestjs, SiPostgresql, SiPrisma, SiMongodb, SiRedis, SiDocker, SiReact, SiTypescript, SiSpringboot, SiDjango, SiFlask, SiLinux, SiGit, SiHtml5, SiCss, SiNodedotjs } from 'react-icons/si';
 import { projects } from './data/projects';
 import ThemeToggle from "../components/ThemeToggle";
 
@@ -34,6 +35,62 @@ interface Experience {
 const Portfolio: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('');
+
+  const categories = [
+    {
+      id: 'backend',
+      title: 'Backend',
+      count: 5,
+      accent: '#4a90e2',
+      icon: SiGo,
+      items: [
+        { label: 'Go', icon: SiGo },
+        { label: 'NestJS', icon: SiNestjs },
+        { label: 'Node.js', icon: SiNodedotjs },
+        { label: 'Spring Boot', icon: SiSpringboot },
+        { label: 'Django / Flask', icon: SiDjango },
+      ],
+    },
+    {
+      id: 'database',
+      title: 'Database',
+      count: 4,
+      accent: '#3cb371',
+      icon: SiPostgresql,
+      items: [
+        { label: 'PostgreSQL', icon: SiPostgresql },
+        { label: 'Prisma ORM', icon: SiPrisma },
+        { label: 'MongoDB', icon: SiMongodb },
+        { label: 'Redis', icon: SiRedis },
+      ],
+    },
+    {
+      id: 'devops',
+      title: 'DevOps',
+      count: 4,
+      accent: '#ff8c42',
+      icon: SiDocker,
+      items: [
+        { label: 'Docker', icon: SiDocker },
+        { label: 'CI/CD', icon: SiGit },
+        { label: 'Git', icon: SiGit },
+        { label: 'Linux', icon: SiLinux },
+      ],
+    },
+    {
+      id: 'frontend',
+      title: 'Frontend',
+      count: 3,
+      accent: '#8a2be2',
+      icon: SiReact,
+      items: [
+        { label: 'React', icon: SiReact },
+        { label: 'TypeScript', icon: SiTypescript },
+        { label: 'HTML / CSS', icon: SiHtml5 },
+      ],
+    },
+  ];
 
   // Dados do portfólio importados de ./data/projects
 
@@ -113,15 +170,19 @@ const Portfolio: React.FC = () => {
         <div className="container">
           <div className="header-content">
               <div className="logo">
-                <img
+                <Image
                   src="/images/logodhmc.svg"
                   alt="Diogo Correia Logo dark"
                   className="logo-image logo-theme-dark"
+                  width={120}
+                  height={40}
                 />
-                <img
+                <Image
                   src="/images/LogoD.svg"
                   alt="Diogo Correia Logo light"
                   className="logo-image logo-theme-light"
+                  width={120}
+                  height={40}
                 />
               </div>
             {/* Mobile Menu Toggle */}
@@ -181,7 +242,7 @@ const Portfolio: React.FC = () => {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="hero">
+      <section id="home" className={`hero ${activeSection === 'home' ? 'hero-visible' : 'hero-hidden'}`}>
         <div className="container">
           <div className="hero-content">
             <div className="hero-text">
@@ -208,7 +269,7 @@ const Portfolio: React.FC = () => {
             </div>
             <div className="hero-avatar">
               <Image
-                src="/images/myPhoto1.jpeg"
+                src="/images/myPhoto1.png"
                 alt="Foto de Diogo Correia"
                 fill
                 className="avatar-image"
@@ -246,14 +307,26 @@ const Portfolio: React.FC = () => {
                     </div>
                     <div className="project-links">
                       {project.githubUrl && (
-                        <a onClick={(e)=>e.stopPropagation()} href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(project.githubUrl, '_blank');
+                          }}
+                          className="project-link-btn"
+                        >
                           Github
-                        </a>
+                        </button>
                       )}
                       {project.liveUrl && (
-                        <a onClick={(e)=>e.stopPropagation()} href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(project.liveUrl, '_blank');
+                          }}
+                          className="project-link-btn"
+                        >
                           Live demo
-                        </a>
+                        </button>
                       )}
                     </div>
                   </div>
@@ -318,42 +391,46 @@ const Portfolio: React.FC = () => {
               <div className="skills-section">
                 <h3>Core technologies</h3>
                 <div className="skills-grid">
-                  <div className="skill-category">
-                    <h4>Backend</h4>
-                    <ul>
-                      <li>Go</li>
-                      <li>NestJS / TypeScript</li>
-                      <li>Node.js</li>
-                      <li>Spring Boot</li>
-                      <li>Django / Flask</li>
-                    </ul>
-                  </div>
-                  <div className="skill-category">
-                    <h4>Database</h4>
-                    <ul>
-                      <li>PostgreSQL</li>
-                      <li>Prisma ORM</li>
-                      <li>MongoDB</li>
-                      <li>Redis</li>
-                    </ul>
-                  </div>
-                  <div className="skill-category">
-                    <h4>DevOps</h4>
-                    <ul>
-                      <li>Docker</li>
-                      <li>CI/CD</li>
-                      <li>Git</li>
-                      <li>Linux</li>
-                    </ul>
-                  </div>
-                  <div className="skill-category">
-                    <h4>Frontend</h4>
-                    <ul>
-                      <li>React</li>
-                      <li>TypeScript</li>
-                      <li>HTML/CSS</li>
-                    </ul>
-                  </div>
+                  {categories.map((category) => {
+                    const Icon = category.icon;
+                    const isActive = activeCategory === category.id;
+                    return (
+                      <button
+                        key={category.id}
+                        type="button"
+                        className={`skill-category ${isActive ? 'active' : ''}`}
+                        style={{ '--accent': category.accent } as React.CSSProperties}
+                        onMouseEnter={() => setActiveCategory(category.id)}
+                        onClick={() => setActiveCategory(category.id)}
+                        aria-expanded={isActive}
+                      >
+                        <div className="category-header">
+                          <div className="category-title">
+                            <span className="category-icon">
+                              <Icon />
+                            </span>
+                            <div>
+                              <h4>{category.title}</h4>
+                              <p className="category-count">{category.count} Technologies</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="category-items">
+                          {category.items.map((item) => {
+                            const ItemIcon = item.icon;
+                            return (
+                              <div key={item.label} className="category-item">
+                                <span className="category-item-icon">
+                                  <ItemIcon />
+                                </span>
+                                <span className="category-item-label">{item.label}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
