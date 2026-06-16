@@ -7,9 +7,6 @@ import { SiGo, SiNestjs, SiPostgresql, SiPrisma, SiMongodb, SiRedis, SiDocker, S
 import { projects } from './data/projects';
 import ThemeToggle from "../components/ThemeToggle";
 
-// @todo trocar a foto de IA para colocar o mascote do golang, adicionar mais detalhes dos projetos
-// @todo mexer um pouco nas hards skills colocar ele maior, colocar o nome da primeira pagina maior
-
 // Tipos
 interface Project {
   id: string;
@@ -98,11 +95,11 @@ const Portfolio: React.FC = () => {
   const experiences: Experience[] = [
     {
       id: '1',
-      company: 'Company Name',
+      company: 'Begyn',
       role: 'Backend Developer',
       period: 'Present',
-      description: 'Developed and maintained APIs using Go, NestJS, and TypeScript. Worked with PostgreSQL, Prisma, and Docker following best practices.',
-      technologies: ['Go', 'Docker', 'PostgreSQL', 'API'],
+      description: 'Developed and maintained APIs using Go. Worked with PostgreSQL following best practices.',
+      technologies: ['Go', 'Docker', 'PostgreSQL', 'RestAPI'],
       current: true
     },
     {
