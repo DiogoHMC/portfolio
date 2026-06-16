@@ -129,6 +129,21 @@ const gallery = (project.imageGallery?.length ? project.imageGallery : [project.
                 );
               })}
             </div>
+              <div className="project-actions">
+              {project.githubUrl && (
+                <a href={project.githubUrl} target="_blank" rel="noreferrer" className="btn btn-primary">
+                  View on GitHub
+                </a>
+              )}
+              {project.liveUrl && (
+                <a href={project.liveUrl} target="_blank" rel="noreferrer" className="btn btn-secondary">
+                  View demo
+                </a>
+              )}
+              <Link href="/" className="btn btn-back">
+                Back to portfolio
+              </Link>
+            </div>
           </div>
           <div className="project-detail-carousel">
             <div className="project-detail-image preview" onClick={() => setIsLightboxOpen(true)}>
@@ -148,21 +163,6 @@ const gallery = (project.imageGallery?.length ? project.imageGallery : [project.
                 </button>
               ))}
             </div>
-          </div>
-          <div className="project-actions">
-            {project.githubUrl && (
-              <a href={project.githubUrl} target="_blank" rel="noreferrer" className="btn btn-primary">
-                View on GitHub
-              </a>
-            )}
-            {project.liveUrl && (
-              <a href={project.liveUrl} target="_blank" rel="noreferrer" className="btn btn-secondary">
-                View demo
-              </a>
-            )}
-            <Link href="/" className="btn btn-back">
-              Back to portfolio
-            </Link>
           </div>
         </section>
       </main>

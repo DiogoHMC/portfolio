@@ -126,6 +126,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Garante o smooth scroll mesmo quando o SO tem "reduzir movimento" ativado
+   (alguns ambientes Linux + navegadores baseados em Chromium, como o Brave,
+   desativam scroll-behavior: smooth automaticamente nesse caso) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   font-family: var(--font-family);
   font-size: var(--font-size-base);
@@ -134,6 +143,46 @@ body {
   background-color: var(--color-bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="9" fill="none" stroke="%23e7eef7" stroke-width="1.4"/><circle cx="13" cy="13" r="2" fill="%23e7eef7"/></svg>') 13 13, auto;
+}
+
+/* Light theme: cursor escuro para manter contraste em fundo claro */
+html[data-theme="light"] body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="9" fill="none" stroke="%230f1724" stroke-width="1.4"/><circle cx="13" cy="13" r="2" fill="%230f1724"/></svg>') 13 13, auto;
+}
+
+/* Cursor customizado nos elementos interativos (mesmo estilo, levemente maior) */
+a,
+button,
+.project-card,
+.project-link-btn,
+.project-links a,
+.skill-category,
+.contact-btn,
+.theme-switch,
+.tech-icon,
+.project-carousel-thumb,
+.lightbox-close,
+.mobile-menu-toggle,
+[role="button"] {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="10.5" fill="none" stroke="%232b6cb0" stroke-width="1.6"/><circle cx="15" cy="15" r="2.5" fill="%232b6cb0"/></svg>') 15 15, pointer;
+}
+
+/* Light theme: accent ligeiramente mais escuro para manter contraste */
+html[data-theme="light"] a,
+html[data-theme="light"] button,
+html[data-theme="light"] .project-card,
+html[data-theme="light"] .project-link-btn,
+html[data-theme="light"] .project-links a,
+html[data-theme="light"] .skill-category,
+html[data-theme="light"] .contact-btn,
+html[data-theme="light"] .theme-switch,
+html[data-theme="light"] .tech-icon,
+html[data-theme="light"] .project-carousel-thumb,
+html[data-theme="light"] .lightbox-close,
+html[data-theme="light"] .mobile-menu-toggle,
+html[data-theme="light"] [role="button"] {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="10.5" fill="none" stroke="%232563eb" stroke-width="1.6"/><circle cx="15" cy="15" r="2.5" fill="%232563eb"/></svg>') 15 15, pointer;
 }
 
 .portfolio {
@@ -371,7 +420,7 @@ html[data-theme="dark"] .logo-theme-light { display: none; }
 }
 
 .btn-secondary {
-  background-color: transparent;
+  background-color: var(--btn-bg);
   /* Use button text color so secondary buttons are visible on both themes */
   color: var(--btn-text);
   border-color: var(--btn-border);
@@ -592,9 +641,9 @@ section {
   gap: 0.4rem;
   padding: 0.5rem 1rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--color-text-secondary);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
@@ -627,13 +676,13 @@ section {
 }
 
 .btn-back {
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: var(--color-text-primary);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--btn-border);
+  color: var(--btn-text);
+  background: var(--btn-bg);
 }
 
 .btn-back:hover {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--btn-bg);
 }
 
 .project-detail {
@@ -721,6 +770,7 @@ section {
   height: 46px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border);
   color: var(--color-text-primary);
   font-size: 1.2rem;
   transition: transform 0.2s ease, background 0.2s ease;
@@ -879,14 +929,26 @@ section {
 .marker-dot {
   width: 16px;
   height: 16px;
-  background-color: var(--color-bg-secondary);
-  border: 3px solid var(--color-primary);
+  background-color: #ffffff;
+  border: 3px solid #ffffff;
   border-radius: 50%;
   z-index: 1;
 }
 
 .marker-dot.current {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
+}
+
+html[data-theme="light"] .marker-dot {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-primary);
+}
+
+html[data-theme="light"] .marker-dot.current {
   background-color: var(--color-primary);
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -991,7 +1053,12 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(16px);
-  transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease;
+  transition:
+    max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    background-color 0.35s ease;
   display: grid;
   grid-template-rows: auto 1fr;
   cursor: pointer;
@@ -1073,6 +1140,15 @@ section {
   background: rgba(255,255,255,.06);
 }
 
+html[data-theme="light"] .skill-category {
+  border: 1px solid rgba(15, 23, 36, 0.12);
+}
+
+html[data-theme="light"] .category-icon {
+  background: rgba(15, 23, 36, 0.04);
+  border: 1px solid rgba(15, 23, 36, 0.12);
+}
+
 .skill-category.active .category-items {
   opacity: 1;
   transform: translateY(0);
@@ -1136,7 +1212,10 @@ section {
   min-height: 520px;
   height: 100%;
   overflow: hidden;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 24px;
 }
+
 
 .about-avatar .avatar-image {
   position: absolute;
