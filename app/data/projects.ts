@@ -23,7 +23,7 @@ export const projects: ProjectData[] = [
     position: 'Full Stack Developer',
     technologies: ['JavaScript', 'Python', 'MySQL'],
     imageUrl: '/images/project/cattuccino/cattuccino.jpeg',
-    imageGallery: ['/images/project/cattuccino/cattuccino.jpeg', '/images/project-1.svg'],
+    imageGallery: ['/images/project/cattuccino/cattuccino.jpeg', '/images/project/cattuccino/cattuccino2.jpeg', '/images/project/cattuccino/cattuccino3.jpeg', '/images/project/cattuccino/cattuccino4.jpeg'],
     githubUrl: 'https://github.com/DiogoHMC/Cattuccino_P5',
     featured: true
   },
